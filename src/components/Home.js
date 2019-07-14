@@ -73,14 +73,15 @@ export default function Home() {
     setTerm(event.target.value);
   }
 
-  
-  
+  console.log(movies, 'MOVIES INSIDE COMPONENT')
+  // console.log(response.data.results);
+  // movies = response.data.results
+
+
   const Search = () => {
     axios.get(`https://api.themoviedb.org/3/search/multi?api_key=2f0913db0269ec28b96e2c24a013e448&query=${term}`)
-      .then(response => {
-        console.log(response.data.results);
-        movies = response.data.results
-      });
+      .then(response => 
+        setMovies(response.data.results));
     }
 
     return (
@@ -113,9 +114,8 @@ export default function Home() {
         <div className={classes.cards}>
         {movies.map(movie => {
           return (
-              <Card className={classes.card} key={movies._id}>
+              <Card className={classes.card} key={movies.id}>
                 <CardActionArea>
-
                   <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
                       {movie.title}
@@ -123,7 +123,7 @@ export default function Home() {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" color="primary" component={RouterLink} to={`/cards/${movie._id}/`}>
+                  <Button size="small" color="primary">
                     Learn More
                   </Button>
                 </CardActions>
