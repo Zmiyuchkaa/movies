@@ -1,14 +1,12 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -23,7 +21,9 @@ const useStyles = makeStyles({
     margin: '0 auto'
   },
   media: {
-    height: 250,
+    width: '50%',
+    height: 'auto',
+    paddingTop: '56.25%', // 16:9
   },
   create_date: {
     fontWeight: 800,
@@ -45,11 +45,15 @@ const useStyles = makeStyles({
 const MovieCard = ({match}) => {
   const classes = useStyles();
   const [movieCard, setMovieCard] = React.useState({});
+  let link = 'https://image.tmdb.org/t/p/w300';
+
+  const setPoster = (poster) => {
+    link = link + poster;
+  }
 
   const addSpace = (budget) => {
     return (budget + "").split("").reverse().join("").replace(/(\d{3})/g, "$1 ").split("").reverse().join("").replace(/^ /, "");
   }
-
 
 React.useEffect(() => {
   axios
@@ -58,6 +62,8 @@ React.useEffect(() => {
     console.log(response)
     setMovieCard(response.data);
     console.log(movieCard)
+    setPoster(movieCard.poster_path)
+    console.log(setPoster)
   });
 }, [match.params.id]);
 
@@ -67,6 +73,7 @@ React.useEffect(() => {
         <Card className={classes.card}>
           <CardActionArea>
             <CardContent className={classes.info}>
+            <CardMedia className={classes.media} image={setPoster} title="Poster"></CardMedia>
               <Typography gutterBottom variant="h5" component="h2">
                 About the movie
               </Typography>
@@ -86,7 +93,7 @@ React.useEffect(() => {
                 Tag line: {movieCard.tagline}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                Rating: {movieCard.vote_average}
+                Rating: {movieCard.vote_average} / 10
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
                 Budget: {addSpace(movieCard.budget) + '$'}

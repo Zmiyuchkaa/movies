@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     width: '5em',
   },
   block: {
-    width: '80%',
+    width: '100%',
     height: '100hv',
     margin: 'auto',
     textAlign: 'center',
@@ -46,7 +46,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   media: {
-    height: 0,
+    width: '50%',
+    height: 'auto',
     paddingTop: '56.25%', // 16:9
   },
   form: {
@@ -65,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Movies() {
   const classes = useStyles();
-
+  let link = 'https://image.tmdb.org/t/p/w300'
   const [term, setTerm] = useState();
   let [movies, setMovies] = useState([]);
 
@@ -91,36 +92,28 @@ export default function Movies() {
           </Typography>
           <TextField
               onChange={handleTermOnChange}
-              autoComplete="fname"
-              name="firstName"
+              name="movieName"
               variant="outlined"
               required
               fullWidth
-              id="firstName"
-              label="Nickname"
+              id="movieTitle"
+              label="type here"
               autoFocus
               color='secondary'
             />
           </Grid>
-          <Button
-            onClick={Search}
-            type="submit"
-            fullWidth
-            variant="contained"
-            className={classes.submit}
-          >
-            Search
-          </Button>
+          <Button onClick={Search} type="submit" fullWidth variant="contained" className={classes.submit}>Search</Button>
         </Grid>
         <div className={classes.cards}>
         {movies.map(movie => {
+          if (movie.poster_path == null || movie.poster_path == undefined)  {
+            let poster = '../images/no-poster.jpg'
+          }
+          let poster = link + movie.poster_path
           return (
               <Card className={classes.card} key={movies.id}>
                 <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  title="Paella dish"
-                  >{movies.poster_path}</CardMedia>
+                  <CardMedia className={classes.media} image={poster} title="Poster"></CardMedia>
                   <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
                       {movie.title}
