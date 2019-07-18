@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { Link as RouterLink} from 'react-router-dom';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -44,9 +45,9 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: 'grey',
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
   },
   form: {
     width: '100%',
@@ -62,11 +63,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function Home() {
+export default function Movies() {
   const classes = useStyles();
 
   const [term, setTerm] = useState();
-  let [answer, setAnswer] = useState();
   let [movies, setMovies] = useState([]);
 
   const handleTermOnChange = (event) => {
@@ -74,8 +74,6 @@ export default function Home() {
   }
 
   console.log(movies, 'MOVIES INSIDE COMPONENT')
-  // console.log(response.data.results);
-  // movies = response.data.results
 
 
   const Search = () => {
@@ -88,6 +86,9 @@ export default function Home() {
       <div>
         <Grid container spacing={2}>
           <Grid item xs={12}>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Search by movies:
+          </Typography>
           <TextField
               onChange={handleTermOnChange}
               autoComplete="fname"
@@ -116,16 +117,29 @@ export default function Home() {
           return (
               <Card className={classes.card} key={movies.id}>
                 <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  title="Paella dish"
+                  >{movies.poster_path}</CardMedia>
                   <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
                       {movie.title}
                     </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {movie.media_type}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {movie.release_date}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {movie.overview}
+                    </Typography>
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" color="primary">
-                    Learn More
-                  </Button>
+                <Button size="small" color="primary" component={Link} to={`/${movie.id}/`}>
+                  Learn More
+                </Button>
                 </CardActions>
               </Card>
           );

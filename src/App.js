@@ -1,11 +1,11 @@
 import React from 'react';
-import Home from './components/Home.js'
+import Router from './Router.js'
 
 class App extends React.Component {
 
   render() {
     return (
-      < Home />
+      < Router />
     )
   }
 }
