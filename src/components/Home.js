@@ -3,6 +3,9 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
+import Bg from '../images/bg.jpg';
+import clsx from 'clsx';
+import MovieLogo from '../images/video-player.png'
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -16,8 +19,16 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
-      backgroundColor: 'teal',
+      backgroundImage: `url(${Bg})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'top',
+      backgroundSize: 'cover',
     },
+  },
+  header: {
+    backgroundColor: '#053578',
+    height: '10em',
+    opacity: '0.85',
   },
   main: {
     width: '100%',
@@ -25,14 +36,19 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
   },
   nav: {
-    marginTop: '30px',
-    color: '#314f1a',
+    cursor: 'pointer',
+    color: '#d0d2d6',
     fontWeight: 'bold',
-    fontSize: '20px',
-    paddingRight: '30px',
+    fontSize: '2em',
   },
-  back: {
-    marginRight: '100%',
+  navBar: {
+    width: '50%',
+    paddingTop: '5%',
+    paddingLeft: '10%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
   content: {
     width: '5em',
@@ -44,6 +60,12 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     backgroundColor: 'white',
   },
+  logo: {
+    cursor: 'pointer',
+    marginTop: '20px',
+    width: '200px',
+    float: 'left',
+  },
   paper: {
     marginTop: theme.spacing(10),
     paddingTop: theme.spacing(3),
@@ -54,19 +76,39 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     width: '50%',
+    height: '80px',
+    marginTop: '2%',
+    marginLeft: '5%',
+    backgroundImage: `url(${MovieLogo})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'top left',
+    backgroundSize: '100px',
+  },
+  logoImage: {
+    width: '200px',
     height: 'auto',
-    paddingTop: '56.25%', // 16:9
   },
   form: {
     width: '100%',
     marginTop: theme.spacing(3),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+  button: {
+    margin: theme.spacing(3),
+    marginLeft: '2%',
+    width: 100,
+    marginTop: '5.3em',
   },
   link: {
     textDecoration: 'none',
     cursor: 'pointer',
+  },
+  textField: {
+    marginLeft: '28%',
+    width: 600,
+    marginTop: '5em',
+  },
+  dense: {
+    marginTop: 59,
   },
 }));
 
@@ -92,29 +134,27 @@ export default function Movies() {
 
     return (
       <div>
-        <header>
-          <Button className={classes.nav} component={Link} to={'/top'}>Top Rated TV Shows</Button>
-          <Button className={classes.nav} component={Link} to={'/upcoming'}>Upcoming Movies</Button>
-          <Button className={classes.nav} component={Link} to={'/popular'}>Popular Movies</Button>
+        <header className={classes.header}>
+          <Button className={classes.logo} component={Link} to={'/'}><CardContent className={classes.media}></CardContent></Button>
+          <nav className={classes.navBar}>
+            <Button className={classes.nav} component={Link} to={'/top'}><Typography>Top Rated Movies</Typography></Button>
+            <Button className={classes.nav} component={Link} to={'/upcoming'}><Typography>Upcoming Movies</Typography></Button>
+            <Button className={classes.nav} component={Link} to={'/popular'}><Typography>popular Movies</Typography></Button>
+          </nav>
         </header>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Search by movies:
-          </Typography>
           <TextField
-              onChange={handleTermOnChange}
-              name="movieName"
-              variant="outlined"
-              required
-              fullWidth
-              id="movieTitle"
-              label="type here"
-              autoFocus
-              color='secondary'
-            />
+            onChange={handleTermOnChange}
+            id="standard-dense"
+            label="type here"
+            className={clsx(classes.textField, classes.dense)}
+            margin="dense"
+            autoFocus
+          />
+          <Button onClick={Search} variant='contained' type="submit" color="primary" className={classes.button}>Search</Button>
           </Grid>
-          <Button onClick={Search} type="submit" fullWidth variant="contained" className={classes.submit}>Search</Button>
+          
         </Grid>
         <div className={classes.cards}>
         {movies.map(movie => {

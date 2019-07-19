@@ -1,52 +1,122 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/styles';
+import {makeStyles, useTheme} from '@material-ui/styles';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import LogoMovie from '../images/video-player.png'
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
+
+const useStyles = makeStyles(theme => ({
+  '@global': {
+    body: {
+      backgroundColor: `#fec3bb`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'top',
+      backgroundSize: 'cover',
+    },
+  },
+  header: {
+    backgroundColor: '#053578',
+    height: '10em',
+    opacity: '0.85',
+  },
   container: {
     height: '100%',
     width: '100%',
-    margin: '0 auto',
-    paddingBottom: 100
+    margin: '5% auto',
+    paddingBottom: 100,
   },
-  card: {
-    maxWidth: 345,
-    margin: '0 auto'
+  nav: {
+    cursor: 'pointer',
+    color: '#d0d2d6',
+    fontWeight: 'bold',
+    fontSize: '2em',
+  },
+  navBar: {
+    width: '50%',
+    paddingTop: '5%',
+    paddingLeft: '10%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  logo: {
+    cursor: 'pointer',
+    marginTop: '20px',
+    width: '200px',
+    float: 'left',
   },
   media: {
     width: '50%',
-    height: 'auto',
-    paddingTop: '56.25%', // 16:9
+    height: '80px',
+    marginTop: '2%',
+    marginLeft: '5%',
+    backgroundImage: `url(${LogoMovie})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'top left',
+    backgroundSize: '100px',
   },
-  create_date: {
-    fontWeight: 800,
-    marginTop: 15
+  card: {
+    maxWidth: '60em',
+    paddingTop: '5%',
+    paddingLeft: '10%',
+    height: '15em',
+    position: 'relative',
   },
-  info: {
-    paddingBottom: 0,
-    paddingTop: 0
+  poster: {
+    width: '50%',
+    height: '100%',
+    paddingTop: '50%',
+    float: 'left',
   },
-  surprised_cat: {
-    position: "absolute",
-    bottom: -70,
-    left: 0,
-    zIndex: -1
+  content: {
+    position: 'absolute',
+    top: '6em',
+    maxWidth: '500px',
+    right: '-10em',
+  },
+  movieContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: '3em',
+    letterSpacing: '0.3em',
+    paddingBottom: '1.2em'
+  },
+  tagline: {
+    paddingBottom: '1.5em',
+    fontSize: '1.4em'
+  },
+  text: {
+    paddingBottom: '1.5em',
+  },
+  bold: {
+    fontWeight: 'bold',
+    fontSize: '1.5em'
+  },
+  overview: {
+    lineHeight: '1.3em',
+    fontSize: '1.2em',
+    paddingBottom: '1.5em',
   }
-});
+
+
+}));
 
 
 const MovieCard = ({match}) => {
   const classes = useStyles();
   const [movieCard, setMovieCard] = React.useState({});
   const [poster, setPoster] = React.useState('');
-  let link = 'https://image.tmdb.org/t/p/w300';
 
 
   const addSpace = (budget) => {
@@ -64,41 +134,44 @@ React.useEffect(() => {
 
   return (
 
-      <div className={classes.container}>
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardContent className={classes.info}>
-            <CardMedia className={classes.media} image={poster} title="Poster"></CardMedia>
-              <Typography gutterBottom variant="h5" component="h2">
-                About the movie
+      <div>
+        <header className={classes.header}>
+          <Button className={classes.logo} component={Link} to={'/'}><CardContent className={classes.media}></CardContent></Button>
+          <nav className={classes.navBar}>
+            <Button className={classes.nav} component={Link} to={'/top'}><Typography>Top Rated Movies</Typography></Button>
+            <Button className={classes.nav} component={Link} to={'/upcoming'}><Typography>Upcoming Movies</Typography></Button>
+            <Button className={classes.nav} component={Link} to={'/popular'}><Typography>popular Movies</Typography></Button>
+          </nav>
+        </header>
+        <div className={classes.card}>
+          <CardMedia className={classes.poster} image={poster} title="Poster"></CardMedia>
+          <div className={classes.content}>
+            <Typography className={classes.title} variant="body2" color="textSecondary" component="p">
+              {movieCard.title}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" className={classes.tagline} component="p">
+                {movieCard.tagline}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {movieCard.title}
+            <div className={classes.movieContent}>
+              <Typography variant="body2" color="textSecondary" className={classes.text} component="p">
+                <b>Rating:</b> <span className={classes.bold}>{movieCard.vote_average} / 10</span>
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {movieCard.overview}
+              <Typography variant="body2" color="textSecondary" className={classes.text} component="p">
+              <b>Release date:</b>{movieCard.release_date}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Release date: {movieCard.release_date}
+              <Typography variant="body2" color="textSecondary" className={classes.text} component="p">
+                <b>Run time:</b> {movieCard.runtime + ' min'}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Run time: {movieCard.runtime + ' min'}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Tag line: {movieCard.tagline}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Rating: {movieCard.vote_average} / 10
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Budget: {addSpace(movieCard.budget) + '$'}
-              </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-        </CardActions>
-      </Card>
-    </div>
+            </div>
+            <Typography variant="body2" color="textSecondary" className={classes.overview} component="p">
+              {movieCard.overview}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" className={classes.text} component="p">
+              <b>Budget:</b> {addSpace(movieCard.budget) + '$'}
+            </Typography>
+          </div>
+        </div>
+      </div>
   ) 
 }
 
