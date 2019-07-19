@@ -30,16 +30,11 @@ const useStyles = makeStyles(theme => ({
     height: '10em',
     opacity: '0.85',
   },
-  main: {
-    width: '100%',
-    height: '100hv',
-    padding: 0,
-  },
-  nav: {
+  logo: {
     cursor: 'pointer',
-    color: '#d0d2d6',
-    fontWeight: 'bold',
-    fontSize: '2em',
+    marginTop: '20px',
+    width: '200px',
+    float: 'left',
   },
   navBar: {
     width: '50%',
@@ -50,29 +45,37 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
-  content: {
-    width: '5em',
-  },
-  block: {
-    width: '100%',
-    height: '100hv',
-    margin: 'auto',
-    textAlign: 'center',
-    backgroundColor: 'white',
-  },
-  logo: {
+  nav: {
     cursor: 'pointer',
-    marginTop: '20px',
-    width: '200px',
-    float: 'left',
+    color: '#d0d2d6',
+    fontWeight: 'bold',
+    fontSize: '2em',
   },
-  paper: {
-    marginTop: theme.spacing(10),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(5),
+  textField: {
+    marginLeft: '28%',
+    width: 600,
+    marginTop: '5em',
+  },
+  dense: {
+    marginTop: 59,
+  },
+  button: {
+    margin: theme.spacing(3),
+    marginLeft: '2%',
+    width: 100,
+    marginTop: '5.3em',
+  },
+  cards: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-around',
+    padding: '10em',
+    flexWrap: 'wrap',
+  },
+  card: {
+    maxWidth: 345,
+    margin: '2em'
   },
   media: {
     width: '50%',
@@ -83,32 +86,6 @@ const useStyles = makeStyles(theme => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'top left',
     backgroundSize: '100px',
-  },
-  logoImage: {
-    width: '200px',
-    height: 'auto',
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(3),
-  },
-  button: {
-    margin: theme.spacing(3),
-    marginLeft: '2%',
-    width: 100,
-    marginTop: '5.3em',
-  },
-  link: {
-    textDecoration: 'none',
-    cursor: 'pointer',
-  },
-  textField: {
-    marginLeft: '28%',
-    width: 600,
-    marginTop: '5em',
-  },
-  dense: {
-    marginTop: 59,
   },
 }));
 
@@ -154,7 +131,6 @@ export default function Movies() {
           />
           <Button onClick={Search} variant='contained' type="submit" color="primary" className={classes.button}>Search</Button>
           </Grid>
-          
         </Grid>
         <div className={classes.cards}>
         {movies.map(movie => {
@@ -163,30 +139,35 @@ export default function Movies() {
           }
           let poster = link + movie.poster_path
           return (
+            <div>
               <Card className={classes.card} key={movies.id}>
                 <CardActionArea>
-                  <CardMedia className={classes.media} image={poster} title="Poster"></CardMedia>
+                  <CardMedia
+                    component="img"
+                    alt="Contemplative Reptile"
+                    height="500"
+                    image={poster} 
+                    title="Poster"
+                  />
                   <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography gutterBottom variant="h5" component="h2">
                       {movie.title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
                       {movie.media_type}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                      {movie.release_date}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      {movie.overview}
+                      Release date: {movie.release_date}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                <Button size="small" color="primary" component={Link} to={`/movie/${movie.id}/`}>
-                  Learn More
-                </Button>
+                  <Button size="small" color="primary" component={Link} to={`/movie/${movie.id}/`}>
+                    Learn More
+                  </Button>
                 </CardActions>
               </Card>
+            </div>
           );
         })}
       </div>

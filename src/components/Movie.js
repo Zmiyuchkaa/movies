@@ -24,27 +24,6 @@ const useStyles = makeStyles(theme => ({
     height: '10em',
     opacity: '0.85',
   },
-  container: {
-    height: '100%',
-    width: '100%',
-    margin: '5% auto',
-    paddingBottom: 100,
-  },
-  nav: {
-    cursor: 'pointer',
-    color: '#d0d2d6',
-    fontWeight: 'bold',
-    fontSize: '2em',
-  },
-  navBar: {
-    width: '50%',
-    paddingTop: '5%',
-    paddingLeft: '10%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
   logo: {
     cursor: 'pointer',
     marginTop: '20px',
@@ -60,6 +39,21 @@ const useStyles = makeStyles(theme => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'top left',
     backgroundSize: '100px',
+  },
+  navBar: {
+    width: '50%',
+    paddingTop: '5%',
+    paddingLeft: '10%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  nav: {
+    cursor: 'pointer',
+    color: '#d0d2d6',
+    fontWeight: 'bold',
+    fontSize: '2em',
   },
   card: {
     maxWidth: '60em',
@@ -80,12 +74,6 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '500px',
     right: '-10em',
   },
-  movieContent: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
   title: {
     fontWeight: 'bold',
     fontSize: '3em',
@@ -96,6 +84,13 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: '1.5em',
     fontSize: '1.4em'
   },
+  movieContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  
   text: {
     paddingBottom: '1.5em',
   },
@@ -108,8 +103,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.2em',
     paddingBottom: '1.5em',
   }
-
-
 }));
 
 
