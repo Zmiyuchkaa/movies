@@ -9,8 +9,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
@@ -76,7 +74,6 @@ export default function Top() {
   let link = 'https://image.tmdb.org/t/p/w300'
   let [movies, setMovies] = useState([]);
   const [poster, setPoster] = React.useState('');
-  const [movieCard, setMovieCard] = React.useState({});
 
 
   React.useEffect(() => {
@@ -94,16 +91,8 @@ export default function Top() {
         <header>
           <Button className={classes.nav} component={Link} to={'/'}>Home Page</Button>
           <Button className={classes.nav} component={Link} to={'/upcoming'}>Upcoming Movies</Button>
-          <Button className={classes.nav} component={Link} to={'/latest'}>Latest Release</Button>
           <Button className={classes.nav} component={Link} to={'/popular'}>Popular Movies</Button>
         </header>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Search by movies:
-          </Typography>
-          </Grid>
-        </Grid>
         <div className={classes.cards}>
         {movies.map(movie => {
           if (movie.poster_path === null || movie.poster_path === undefined)  {

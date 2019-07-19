@@ -95,7 +95,6 @@ export default function Movies() {
         <header>
           <Button className={classes.nav} component={Link} to={'/top'}>Top Rated TV Shows</Button>
           <Button className={classes.nav} component={Link} to={'/upcoming'}>Upcoming Movies</Button>
-          <Button className={classes.nav} component={Link} to={'/latest'}>Latest Release</Button>
           <Button className={classes.nav} component={Link} to={'/popular'}>Popular Movies</Button>
         </header>
         <Grid container spacing={2}>
