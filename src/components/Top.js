@@ -71,59 +71,73 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function Upcoming() {
+export default function Top() {
   const classes = useStyles();
   let link = 'https://image.tmdb.org/t/p/w300'
-  const [term, setTerm] = useState();
   let [movies, setMovies] = useState([]);
+  const [poster, setPoster] = React.useState('');
+  const [movieCard, setMovieCard] = React.useState({});
 
-  console.log(movies, 'MOVIES INSIDE COMPONENT')
 
-  const Search = () => {
-    axios.get("https://api.themoviedb.org/3/movie/top_rated?api_key=2f0913db0269ec28b96e2c24a013e448&language=en-US&page=1")
-      .then(response => 
-        setMovies(response.data.results));
-        console.log('received')
-    }
+  React.useEffect(() => {
+    axios
+    .get(`https://api.themoviedb.org/3/movie/top_rated?api_key=2f0913db0269ec28b96e2c24a013e448&language=en-US&page=1`)
+    .then(response => {
+      setMovies(response.data.results);
+      console.log(response.data.results)
+      setPoster(`https://image.tmdb.org/t/p/w300${response.data.results.poster_path}`);
+    });
+  });
 
     return (
       <div>
+        <header>
+          <Button className={classes.nav} component={Link} to={'/'}>Home Page</Button>
+          <Button className={classes.nav} component={Link} to={'/upcoming'}>Upcoming Movies</Button>
+          <Button className={classes.nav} component={Link} to={'/latest'}>Latest Release</Button>
+          <Button className={classes.nav} component={Link} to={'/popular'}>Popular Movies</Button>
+        </header>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Search by movies:
+          </Typography>
+          </Grid>
+        </Grid>
         <div className={classes.cards}>
-          {movies.map(movie => {
-            if (movie.poster_path === null || movie.poster_path === undefined)  {
-              let poster = '../images/no-poster.jpg'
-            }
-            let poster = link + movie.poster_path
-            return (
-                <Card className={classes.card} key={movies.id}>
-                  <CardActionArea>
-                    <CardMedia className={classes.media} image={poster} title="Poster"></CardMedia>
-                    <CardContent>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        {movie.title}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        {movie.media_type}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        {movie.release_date}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        {movie.overview}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                  <Button size="small" color="primary" component={Link} to={`/${movie.id}/`}>
-                    Learn More
-                  </Button>
-                  </CardActions>
-                </Card>
-            );
-          })}
-        </div>
+        {movies.map(movie => {
+          if (movie.poster_path === null || movie.poster_path === undefined)  {
+            let poster = '../images/no-poster.jpg'
+          }
+          let poster = link + movie.poster_path
+          return (
+              <Card className={classes.card} key={movies.id}>
+                <CardActionArea>
+                  <CardMedia className={classes.media} image={poster} title="Poster"></CardMedia>
+                  <CardContent>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {movie.title}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {movie.media_type}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {movie.release_date}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      {movie.overview}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                <Button size="small" color="primary" component={Link} to={`/movie/${movie.id}/`}>
+                  Learn More
+                </Button>
+                </CardActions>
+              </Card>
+          );
+        })}
       </div>
-    )
-  
+      </div>
+    );
   }
-

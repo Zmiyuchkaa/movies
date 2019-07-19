@@ -48,9 +48,6 @@ const MovieCard = ({match}) => {
   const [poster, setPoster] = React.useState('');
   let link = 'https://image.tmdb.org/t/p/w300';
 
-  // const setPosterLink = (poster) => {
-  //   link = link + poster;
-  // }
 
   const addSpace = (budget) => {
     return (budget + "").split("").reverse().join("").replace(/(\d{3})/g, "$1 ").split("").reverse().join("").replace(/^ /, "");
@@ -60,15 +57,12 @@ React.useEffect(() => {
   axios
   .get(`https://api.themoviedb.org/3/movie/${match.params.id}?api_key=2f0913db0269ec28b96e2c24a013e448`)
   .then(response => {
-    console.log(response)
     setMovieCard(response.data);
-    console.log('kk', movieCard);
     setPoster(`https://image.tmdb.org/t/p/w300${response.data.poster_path}`);
-    console.log('kkk', poster);
   });
 }, [match.params.id]);
 
-  return(
+  return (
 
       <div className={classes.container}>
         <Card className={classes.card}>

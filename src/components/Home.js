@@ -93,8 +93,10 @@ export default function Movies() {
     return (
       <div>
         <header>
-          <Button className={classes.nav} component={Link} to={'/'}>Top Rated TV Shows</Button>
-          <Button className={classes.nav} component={Link} to={'/'}>Upcoming Movies</Button>
+          <Button className={classes.nav} component={Link} to={'/top'}>Top Rated TV Shows</Button>
+          <Button className={classes.nav} component={Link} to={'/upcoming'}>Upcoming Movies</Button>
+          <Button className={classes.nav} component={Link} to={'/latest'}>Latest Release</Button>
+          <Button className={classes.nav} component={Link} to={'/popular'}>Popular Movies</Button>
         </header>
         <Grid container spacing={2}>
           <Grid item xs={12}>
