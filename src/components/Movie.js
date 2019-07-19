@@ -45,11 +45,12 @@ const useStyles = makeStyles({
 const MovieCard = ({match}) => {
   const classes = useStyles();
   const [movieCard, setMovieCard] = React.useState({});
+  const [poster, setPoster] = React.useState('');
   let link = 'https://image.tmdb.org/t/p/w300';
 
-  const setPoster = (poster) => {
-    link = link + poster;
-  }
+  // const setPosterLink = (poster) => {
+  //   link = link + poster;
+  // }
 
   const addSpace = (budget) => {
     return (budget + "").split("").reverse().join("").replace(/(\d{3})/g, "$1 ").split("").reverse().join("").replace(/^ /, "");
@@ -61,9 +62,9 @@ React.useEffect(() => {
   .then(response => {
     console.log(response)
     setMovieCard(response.data);
-    console.log(movieCard)
-    setPoster(movieCard.poster_path)
-    console.log(setPoster)
+    console.log('kk', movieCard);
+    setPoster(`https://image.tmdb.org/t/p/w300${response.data.poster_path}`);
+    console.log('kkk', poster);
   });
 }, [match.params.id]);
 
@@ -73,7 +74,7 @@ React.useEffect(() => {
         <Card className={classes.card}>
           <CardActionArea>
             <CardContent className={classes.info}>
-            <CardMedia className={classes.media} image={setPoster} title="Poster"></CardMedia>
+            <CardMedia className={classes.media} image={poster} title="Poster"></CardMedia>
               <Typography gutterBottom variant="h5" component="h2">
                 About the movie
               </Typography>

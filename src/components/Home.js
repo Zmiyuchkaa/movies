@@ -24,6 +24,13 @@ const useStyles = makeStyles(theme => ({
     height: '100hv',
     padding: 0,
   },
+  nav: {
+    marginTop: '30px',
+    color: '#314f1a',
+    fontWeight: 'bold',
+    fontSize: '20px',
+    paddingRight: '30px',
+  },
   back: {
     marginRight: '100%',
   },
@@ -85,6 +92,10 @@ export default function Movies() {
 
     return (
       <div>
+        <header>
+          <Button className={classes.nav} component={Link} to={'/'}>Top Rated TV Shows</Button>
+          <Button className={classes.nav} component={Link} to={'/'}>Upcoming Movies</Button>
+        </header>
         <Grid container spacing={2}>
           <Grid item xs={12}>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -106,7 +117,7 @@ export default function Movies() {
         </Grid>
         <div className={classes.cards}>
         {movies.map(movie => {
-          if (movie.poster_path == null || movie.poster_path == undefined)  {
+          if (movie.poster_path === null || movie.poster_path === undefined)  {
             let poster = '../images/no-poster.jpg'
           }
           let poster = link + movie.poster_path
@@ -130,7 +141,7 @@ export default function Movies() {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                <Button size="small" color="primary" component={Link} to={`/${movie.id}/`}>
+                <Button size="small" color="primary" component={Link} to={`/movie/${movie.id}/`}>
                   Learn More
                 </Button>
                 </CardActions>
